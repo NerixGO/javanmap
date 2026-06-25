@@ -39,8 +39,9 @@ Make the script executable:
 
 chmod +x javanmap.sh
 
+---
 
-### For help message:
+## For help message:
 ```bash
 ./javanmap.sh --help
 ```
