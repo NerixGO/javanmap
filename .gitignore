@@ -1,3 +1,4 @@
+bin/*.class
 *.class
 .DS_Store
 .Spotlight-V100
