@@ -5,13 +5,16 @@ import java.net.UnknownHostException;
 public class PingCheck {
     
     public String ip;
+    public int updown = 0;
 
     public PingCheck(String ip) {
         this.ip = ip;
     }
 
+    public int getUpdown() {
+        return updown;
+    }
     public boolean ping(String ip) {
-        int updown = 0;
 
         try {
             InetAddress address = InetAddress.getByName(ip);
