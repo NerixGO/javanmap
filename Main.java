@@ -11,6 +11,9 @@ public class Main {
         
         boolean yn1 = check.ping(ip);
         if (!yn1) {
+            long endTime = System.currentTimeMillis();
+            int updown = check.getUpdown();
+            System.out.print("Javanmap done: 1 IP address (" + updown + " hosts up) scanned in " + (double)(endTime - startTime)/1000 + " seconds.");
             System.exit(1);
         }
 
@@ -19,6 +22,6 @@ public class Main {
         long endTime = System.currentTimeMillis();
 
         int updown = check.getUpdown();
-        System.out.print("\nJavanmap done: 1 IP address (" + updown + " hosts up) scanned in " + (endTime - startTime) + " milliseconds.");
+        System.out.print("Javanmap done: 1 IP address (" + updown + " hosts up) scanned in " + (double)(endTime - startTime)/1000 + " seconds.");
     }
 }
