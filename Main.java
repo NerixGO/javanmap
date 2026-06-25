@@ -1,12 +1,13 @@
 public class Main {
     public static void main (String[] args) {
-        String ip = args[0];
+        String version = args[0];
+        String ip = args[1];
         PingCheck check = new PingCheck(ip);
         PortCheckTop1000 ports = new PortCheckTop1000(ip);
         
         long startTime = System.currentTimeMillis();
 
-        System.out.println("Javanmap 0.1 ( https://github.com/NerixGO/javanmap )");
+        System.out.println("Javanmap " + version + " ( https://github.com/NerixGO/javanmap )");
         
         boolean yn1 = check.ping(ip);
         if (!yn1) {
@@ -17,6 +18,7 @@ public class Main {
 
         long endTime = System.currentTimeMillis();
 
-        System.out.print("\nJavanmap done: 1 IP address (" + yn1 + " hosts up) scanned in " + (endTime - startTime) + " milliseconds.");
+        int updown = check.getUpdown();
+        System.out.print("\nJavanmap done: 1 IP address (" + updown + " hosts up) scanned in " + (endTime - startTime) + " milliseconds.");
     }
 }
