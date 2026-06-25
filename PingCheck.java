@@ -18,10 +18,14 @@ public class PingCheck {
 
         try {
             InetAddress address = InetAddress.getByName(ip);
-            
+
             if (address.isReachable(3000)) {
-                System.out.println("Javanmap scan report for " + ip + "\nHost is up.");
+                System.out.println("Javanmap scan report for " + address.getHostName() + " (" + address.getHostAddress() +")");
+                System.out.println("Host is up.");
                 updown++;
+            } else {
+                System.out.println("Note: Host seems down. If it is really up, but blocking our ping probes, try -Pn");
+                return false;
             }
         } catch (UnknownHostException e) {
             System.out.println("Note: Host seems down. If it is really up, but blocking our ping probes, try -Pn");
