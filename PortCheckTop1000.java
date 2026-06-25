@@ -7,11 +7,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class PortCheckTop1000 {
-    public String ip;
-
-    public PortCheckTop1000(String ip) {
-        this.ip = ip;
-    }
 
     public void top1000(String ip) {
         System.out.println("PORT");
