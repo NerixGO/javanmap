@@ -1,13 +1,14 @@
 #!/bin/bash
 
+version="v0.2.1"
 if [[ -z $1 ]]; then
 
     echo "
     BEFORE USAGE MAKE SURE JAVA IS INSTALLED!
     
-    Javanmap 0.1 ( https://github.com/NerixGO/javanmap )
+    Javanmap $version ( https://github.com/NerixGO/javanmap )
     Javanmap is a Nmap wroted from 0 with java language!
-    Usage: javanmap [Scan Type(s)] [Options] {target specification}
+    Usage: javanmap {target specification}
     
     TARGET SPECIFICATION:
         Can pass IP addresses
@@ -20,4 +21,4 @@ if [[ -z $1 ]]; then
 fi
 
 ip="${@: -1}"
-java Main "$ip"
+java Main $version $ip
