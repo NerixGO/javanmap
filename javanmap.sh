@@ -1,6 +1,6 @@
 #!/bin/bash
 
-version="v0.2.3"
+version="v0.2.4"
 
 if [ "$ls bin/" == null ]; then
     javac -d bin *.java
