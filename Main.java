@@ -3,7 +3,7 @@ public class Main {
         String version = args[0];
         String ip = args[1];
         PingCheck check = new PingCheck(ip);
-        PortCheckTop1000 ports = new PortCheckTop1000(ip);
+        PortCheckTop1000 ports = new PortCheckTop1000();
         
         long startTime = System.currentTimeMillis();
 
