@@ -1,10 +1,7 @@
 #!/bin/bash
 
 version="v0.2.4"
-
-if [ -z "$(ls -A bin 2>/dev/null)" ]; then
-    javac -d bin *.java
-fi
+ip="${@: -1}"
 
 if [[ -z $1 ]]; then
 
@@ -25,5 +22,8 @@ if [[ -z $1 ]]; then
     exit
 fi
 
-ip="${@: -1}"
+mkdir -p bin
+if [[ -z "$(find bin -type f -name '*.class' 2>/dev/null)" ]]; then
+    javac -d bin *.java
+fi
 java -cp bin Main $version $ip
