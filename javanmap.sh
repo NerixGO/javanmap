@@ -2,7 +2,7 @@
 
 version="v0.2.4"
 
-if [ "$ls bin/" == null ]; then
+if [ -z "$(ls -A bin 2>/dev/null)" ]; then
     javac -d bin *.java
 fi
 
