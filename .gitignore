@@ -1,5 +1,6 @@
 bin/*.class
 *.class
+!.gitkeep
 .DS_Store
 .Spotlight-V100
 .Trashes
