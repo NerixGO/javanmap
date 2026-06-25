@@ -1,6 +1,11 @@
 #!/bin/bash
 
 version="v0.2.1"
+
+if [ "$ls bin/" == null ]; then
+    javac -d bin *.java
+fi
+
 if [[ -z $1 ]]; then
 
     echo "
@@ -21,4 +26,4 @@ if [[ -z $1 ]]; then
 fi
 
 ip="${@: -1}"
-java Main $version $ip
+java -cp bin Main $version $ip
