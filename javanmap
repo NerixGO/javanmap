@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-version="v0.3.2"
+version="v0.4.0"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 for arg in "$@"; do
