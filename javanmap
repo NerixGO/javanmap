@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-version="v0.4.0"
+version="v0.4.1"
 SCRIPT_DIR="/opt/javanmap"
 
 for arg in "$@"; do
@@ -12,36 +12,36 @@ for arg in "$@"; do
     Javanmap $version ( https://github.com/NerixGO/javanmap )
     Javanmap is a Nmap wroted from scratch with java language!
     Usage: javanmap [option] <target>
-    
+
     TARGET SPECIFICATION:
         Can pass IP addresses
         Ex: 192.168.0.1
 
     EXAMPLES:
         javanmap 192.168.0.1
-        
+
     SCAN OPTIONS:
         -p <port>, --port <port>                Use specific port. If port not specified, scan 1000 Most common used ports"
 
         exit 0
+
     elif [[ "$1" == "update" ]]; then
-    cd "$SCRIPT_DIR"
+        cd "$SCRIPT_DIR"
 
-    echo "Updating..."
+        echo "Updating..."
 
-    git pull
+        git pull
 
-    ./install.sh
+        ./install.sh
 
-    exit
-fi
+        exit
+    fi
 done
 
 mkdir -p "$SCRIPT_DIR/bin"
-if [[ -z "$(find "$SCRIPT_DIR/bin" -name '*.class')" ]]; then
-    javac -d "$SCRIPT_DIR/bin" "$SCRIPT_DIR"/*.java
-fi
+
+javac -d "$SCRIPT_DIR/bin" "$SCRIPT_DIR"/*.java
 
 echo "Javanmap $version ( https://github.com/NerixGO/javanmap )"
 
-java -cp "$SCRIPT_DIR/bin" Main "$@"
+java -cp "$SCRIPT_DIR/bin" Main --data-dir="$SCRIPT_DIR" "$@"
