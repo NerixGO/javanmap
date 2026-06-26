@@ -12,7 +12,7 @@ for arg in "$@"; do
     Javanmap $version ( https://github.com/NerixGO/javanmap )
     Javanmap is a Nmap wroted from scratch with java language!
     Usage: javanmap [option] <target>
-
+    
     TARGET SPECIFICATION:
         Can pass IP addresses
         Ex: 192.168.0.1
