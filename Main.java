@@ -1,27 +1,37 @@
 public class Main {
     public static void main (String[] args) {
-        String version = args[0];
-        String ip = args[1];
-        PingCheck check = new PingCheck(ip);
+
+        ScanOptions opt = ScanOptions.checkArgs(args);
+        Scan scan = new Scan();
+
+        if (opt.ip == null) {
+            System.out.println("Error: no target IP provided");
+            return;
+        }
+        PingCheck check = new PingCheck(opt.ip);
         PortCheckTop1000 ports = new PortCheckTop1000();
         
         long startTime = System.currentTimeMillis();
-
-        System.out.println("Javanmap " + version + " ( https://github.com/NerixGO/javanmap )");
         
-        boolean yn1 = check.ping(ip);
-        if (!yn1) {
+        // Starting main scan
+        
+        boolean alive = check.ping(opt.ip);
+        if (!alive) {
             long endTime = System.currentTimeMillis();
             int updown = check.getUpdown();
-            System.out.print("Javanmap done: 1 IP address (" + updown + " hosts up) scanned in " + (double)(endTime - startTime)/1000 + " seconds.");
+            System.out.print("\nJavanmap done: " + opt.QuantityIps + " IP address (" + updown + " hosts up) scanned in " + (double)(endTime - startTime)/1000 + " seconds.");
             System.exit(1);
         }
-
-        ports.top1000(ip);
+        
+        if (opt.port != -1) {
+            scan.checkPort(opt.ip, opt.port);
+        } else {
+            ports.top1000(opt.ip);
+        }
 
         long endTime = System.currentTimeMillis();
 
         int updown = check.getUpdown();
-        System.out.print("Javanmap done: 1 IP address (" + updown + " hosts up) scanned in " + (double)(endTime - startTime)/1000 + " seconds.");
+        System.out.print("\nJavanmap done: " + opt.QuantityIps + " IP address (" + updown + " hosts up) scanned in " + (double)(endTime - startTime)/1000 + " seconds.");
     }
 }
