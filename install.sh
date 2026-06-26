@@ -12,7 +12,7 @@ sudo rm -rf "$INSTALL_DIR"
 
 sudo mkdir -p "$INSTALL_DIR"
 
-sudo rsync -a --delete ./ "$INSTALL_DIR/"
+sudo cp -ar ./ "$INSTALL_DIR/"
 
 sudo chmod +x "$INSTALL_DIR/javanmap"
 
