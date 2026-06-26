@@ -16,7 +16,7 @@ Do not use it on networks or systems you do not own or have explicit permission 
 ## 🛠 Requirements
 
 - Java 8 or higher
-- Bash (for running `javanmap.sh`)
+- Bash (for running `javanmap`)
 
 Check Java version:
 
@@ -28,22 +28,39 @@ java -version
 
 # 📥 Installation
 
-Clone the repository:
+Clone the repository and use install.sh script:
 
-```
+```bash
 git clone https://github.com/NerixGO/javanmap.git
+
 cd javanmap
+
+chmod +x install.sh
+
+./install
+
+#Make the script executable:
+
+chmod +x javanmap
 ```
 
-Make the script executable:
 
-chmod +x javanmap.sh
+
+---
+
+# 🔄 Update
+
+If you want to update program, just type:
+
+```bash
+javanmap update
+```
 
 ---
 
 ## For help message:
 ```bash
-./javanmap.sh --help
+javanmap --help
 ```
 
 ---
