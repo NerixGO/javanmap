@@ -23,6 +23,7 @@ public class PingCheck {
                 System.out.println("Javanmap scan report for " + address.getHostName() + " (" + address.getHostAddress() +")");
                 System.out.println("Host is up.");
                 updown++;
+                return true;
             } else {
                 System.out.println("Note: Host seems down. If it is really up, but blocking our ping probes, try -Pn");
                 return false;
@@ -33,7 +34,6 @@ public class PingCheck {
         } catch (IOException e) {
             System.out.println("Note: Host seems down. If it is really up, but blocking our ping probes, try -Pn");
             return false;
-        };
-        return true;
+        }
     }
 }
