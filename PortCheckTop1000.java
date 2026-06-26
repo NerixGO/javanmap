@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 public class PortCheckTop1000 {
 
     public void top1000(String ip) {
-        System.out.println("PORT");
+        System.out.println("\nPORT");
         try {
             List<Integer> ports = Files.readAllLines(Paths.get("Top1000Ports.txt"))
                     .stream()
