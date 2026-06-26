@@ -1,6 +1,7 @@
 public class ScanOptions {
 
     String ip;
+    String dataDir;
     int QuantityIps = 0;
     int port = -1;
         
@@ -13,6 +14,11 @@ public class ScanOptions {
         for (int i = 0; i < args.length; i++) {
             String arg = args[i];
 
+             if (arg.startsWith("--data-dir=")) {
+                opt.dataDir = arg.substring("--data-dir=".length());
+                continue;
+            }
+            
             switch (arg) {
                 case "-p":
                 case "--port":
