@@ -1,6 +1,7 @@
 #!/bin/bash
 
 version="v0.2.4"
+
 for arg in "$@"; do
     if [[ -z $1 || $arg == "--help" || $arg == "-h" ]]; then
 
@@ -27,10 +28,6 @@ if [[ -z "$(find bin -type f -name '*.class' 2>/dev/null)" ]]; then
     javac -d bin *.java
 fi
 
-for arg in "$@"; do
-    if [[ "$arg" =~ ^([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)$ ]]; then 
-        ip="$arg"
-    fi
-done
+echo "Javanmap $version ( https://github.com/NerixGO/javanmap )"
 
-java -cp bin Main $version $ip
+java -cp bin Main "$@"
