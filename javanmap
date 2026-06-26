@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-version="v0.4.1"
+version="v0.4.2"
 SCRIPT_DIR="/opt/javanmap"
 
 for arg in "$@"; do
