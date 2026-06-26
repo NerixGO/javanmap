@@ -37,7 +37,7 @@ cd javanmap
 
 chmod +x install.sh
 
-./install
+./install.sh
 
 #Make the script executable:
 
