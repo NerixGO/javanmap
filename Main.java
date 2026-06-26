@@ -20,7 +20,7 @@ public class Main {
         if (!alive) {
             long endTime = System.currentTimeMillis();
             int updown = check.getUpdown();
-            System.out.print("\nJavanmap done: " + opt.QuantityIps + " IP address (" + updown + " hosts up) scanned in " + (double)(endTime - startTime)/1000 + " seconds.");
+            System.out.print("\nJavanmap done: " + opt.QuantityIps + " IP address (" + updown + " hosts up) scanned in " + (double)(endTime - startTime)/1000 + " seconds.\n");
             System.exit(1);
         }
         
@@ -33,6 +33,6 @@ public class Main {
         long endTime = System.currentTimeMillis();
 
         int updown = check.getUpdown();
-        System.out.print("\nJavanmap done: " + opt.QuantityIps + " IP address (" + updown + " hosts up) scanned in " + (double)(endTime - startTime)/1000 + " seconds.");
+        System.out.print("\nJavanmap done: " + opt.QuantityIps + " IP address (" + updown + " hosts up) scanned in " + (double)(endTime - startTime)/1000 + " seconds.\n");
     }
 }
