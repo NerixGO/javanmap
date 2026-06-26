@@ -10,14 +10,16 @@ public class PortCheckTop1000 {
 
     public void top1000(String ip) {
         System.out.println("\nPORT");
+
         try {
-            List<Integer> ports = Files.readAllLines(Paths.get("Top1000Ports.txt"))
-                    .stream()
-                    .map(String::trim)
-                    .filter(s -> !s.isEmpty())
-                    .map(Integer::parseInt)
-                    .collect(Collectors.toList());
-            
+            List<Integer> ports = Files.readAllLines(Paths.get(System.getProperty("user.dir"), "Top1000Ports.txt")
+                )
+                .stream()
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
+
             for (Integer port : ports) {
                 try (Socket socket = new Socket()) {
                     socket.connect(new InetSocketAddress(ip, port), 200);
@@ -26,7 +28,7 @@ public class PortCheckTop1000 {
             }
 
         } catch (IOException e) {
-             e.printStackTrace();
+            e.printStackTrace();
         }
     }
 }
