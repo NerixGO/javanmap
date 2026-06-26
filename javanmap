@@ -24,7 +24,17 @@ for arg in "$@"; do
         -p <port>, --port <port>                Use specific port. If port not specified, scan 1000 Most common used ports"
 
         exit 0
-    fi
+    elif [[ "$1" == "update" ]]; then
+    cd "$SCRIPT_DIR"
+
+    echo "Updating..."
+
+    git pull
+
+    ./install.sh
+
+    exit
+fi
 done
 
 mkdir -p "$SCRIPT_DIR/bin"
