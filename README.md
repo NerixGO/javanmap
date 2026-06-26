@@ -12,6 +12,8 @@ This tool is intended for educational purposes only.
 Do not use it on networks or systems you do not own or have explicit permission to scan.
 
 ---
+---
+---
 
 ## 🛠 Requirements
 
@@ -37,7 +39,7 @@ cd javanmap
 
 chmod +x install.sh
 
-./install.sh
+sudo bash ./install.sh
 
 #Make the script executable:
 
@@ -54,6 +56,17 @@ If you want to update program, just type:
 
 ```bash
 javanmap update
+```
+
+---
+
+# ⛔ Uninstall
+
+If you want to uninstall the program, just use the uninstall script:
+```bash
+chmod +x /opt/javanmap/uninstall.sh
+
+bash /opt/javanmap/uninstall.sh
 ```
 
 ---
