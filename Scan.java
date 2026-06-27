@@ -1,22 +1,19 @@
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 
 public class Scan {
 
-    public String ip;
-    public int port;
-
     public void checkPort(String ip, int port) {
-        try {
-            Socket socket = new Socket(ip, port);
+        
+        System.out.println("\nPORT");
+
+        try (Socket socket = new Socket()) {
     
-            System.out.println("\nPORT");
+            socket.connect(new InetSocketAddress(ip, port), 300);
             System.out.println(port);
 
-            socket.close();
         } catch (IOException e) {
         }
-
-
     }
 }
