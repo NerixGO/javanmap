@@ -1,47 +1,83 @@
 #!/usr/bin/env bash
 
-version="v0.4.2"
+set -e
+
+VERSION="v0.5.0"
 SCRIPT_DIR="/opt/javanmap"
 
-for arg in "$@"; do
-    if [[ $arg == "--help" || $arg == "-h" ]]; then
+show_help() {
+    printf "\n\033[1m   ---BEFORE USAGE MAKE SURE JAVA IS INSTALLED!---\033[0m\n\n"
 
-        printf "\n\033[1m   ---BEFORE USAGE MAKE SURE JAVA IS INSTALLED!---\033[0m\n"
+    cat <<EOF
+    Javanmap $VERSION ( https://github.com/NerixGO/javanmap )
+    Javanmap is an Nmap-inspired scanner written from scratch in Java.
 
-    echo "
-    Javanmap $version ( https://github.com/NerixGO/javanmap )
-    Javanmap is a Nmap wroted from scratch with java language!
     Usage: javanmap [option] <target>
     
     TARGET SPECIFICATION:
-        Can pass IP addresses
+        Can pass IPv4 addresses
         Ex: 192.168.0.1
 
     EXAMPLES:
         javanmap 192.168.0.1
 
     SCAN OPTIONS:
-        -p <port>, --port <port>                Use specific port. If port not specified, scan 1000 Most common used ports"
+        -p <port>, --port <port>                Scan a specific port. If omitted, the 1000 most common ports are scanned.
+        
+    
+    FEW EXAMPLES:
+        javanmap -p 22 192.168.0.1
 
+    COMMANDS:
+        javanmap update                         Update the program 
+        javanmap uninstall                      Remove the program
+
+    OTHER: -h, --help                           Show this help message
+EOF
+}
+
+case "$1" in
+    -h|--help)
+        show_help
         exit 0
-
-    elif [[ "$1" == "update" ]]; then
-        cd "$SCRIPT_DIR"
-
+        ;;
+        
+    update)
         echo "Updating..."
 
-        git pull
+        if [[ ! -d "$SCRIPT_DIR/.git" ]]; then
+            echo "Error: installation is not a Git repository."
+            echo "Please reinstall using a Git clone."
+            exit 1
+        fi
 
-        ./install.sh
+        git -C "$SCRIPT_DIR" pull
+        sudo bash "$SCRIPT_DIR/install.sh"
 
-        exit
-    fi
-done
+        echo "Update completed."
+        exit 0
+        ;;
 
-mkdir -p "$SCRIPT_DIR/bin"
+    uninstall)
+        sudo bash "$SCRIPT_DIR/uninstall.sh"
 
-javac -d "$SCRIPT_DIR/bin" "$SCRIPT_DIR"/*.java
+        if [[ ! -d "$SCRIPT_DIR" ]]; then
+            echo "The program was removed successfully."
+        else
+            echo "Error: uninstall failed."
+            exit 1
+        fi
 
-echo "Javanmap $version ( https://github.com/NerixGO/javanmap )"
+        exit 0
+        ;;
+esac
 
-java -cp "$SCRIPT_DIR/bin" Main --data-dir="$SCRIPT_DIR" "$@"
+if [[ ! -f "$SCRIPT_DIR/bin/Main.class" ]]; then
+    echo "Error: compiled classes were not found."
+    echo "Please reinstall the program."
+    exit 1
+fi
+
+echo "Javanmap $version( https://github.com/NerixGO/javanmap )"
+
+exec java -cp "$SCRIPT_DIR/bin" Main --data-dir="$SCRIPT_DIR" "$@"
