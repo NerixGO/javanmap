@@ -33,16 +33,11 @@ javac -version
 Clone the repository:
 
 ```bash
-git clone https://github.com/NerixGO/javanmap.git
-cd javanmap
+git clone --depth 1 https://github.com/NerixGO/javanmap.git
 
-#Make installer executable:
+sudo bash javanmap/install.sh
 
-chmod +x install.sh
-
-#Run installer:
-
-sudo bash ./install.sh
+rm -rf javanmap
 ```
 
 After installation, you can run:
