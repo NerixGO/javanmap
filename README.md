@@ -1,8 +1,7 @@
 # Javanmap
 
 Javanmap is a lightweight network scanner written from scratch in Java, inspired by Nmap.
-
-It allows basic host and port scanning functionality through a simple command-line interface.
+It provides basic host discovery and port scanning functionality through a simple CLI interface.
 
 ---
 
@@ -10,75 +9,111 @@ It allows basic host and port scanning functionality through a simple command-li
 
 This tool is intended for educational purposes only.
 Do not use it on networks or systems you do not own or have explicit permission to scan.
+The author is not responsible for any misuse.
 
----
----
 ---
 
 ## 🛠 Requirements
 
-- Java 8 or higher
-- Bash (for running `javanmap`)
+- Java 8 or higher (JDK required, not just JRE)
+- Bash (for installation and CLI launcher)
+- Git (for update functionality)
 
 Check Java version:
 
 ```bash
 java -version
-```
+javac -version
+````
 
 ---
 
-# 📥 Installation
+## 📥 Installation
 
-Clone the repository and use install.sh script:
+Clone the repository:
 
 ```bash
 git clone https://github.com/NerixGO/javanmap.git
-
 cd javanmap
+
+#Make installer executable:
 
 chmod +x install.sh
 
+#Run installer:
+
 sudo bash ./install.sh
-
-#Make the script executable:
-
-chmod +x javanmap
 ```
 
-
-
----
-
-# 🔄 Update
-
-If you want to update program, just type:
+After installation, you can run:
 
 ```bash
-javanmap update
+javanmap
 ```
 
 ---
 
-# ⛔ Uninstall
+## 🚀 Usage
 
-If you want to uninstall the program, just use the uninstall script:
+Basic scan:
+
 ```bash
-chmod +x /opt/javanmap/uninstall.sh
-
-bash /opt/javanmap/uninstall.sh
+javanmap 192.168.0.1
 ```
 
----
+Scan specific port:
 
-## For help message:
+```bash
+javanmap -p 80 192.168.0.1
+```
+
+Show help:
+
 ```bash
 javanmap --help
 ```
 
 ---
 
-# 👨‍💻 Author
+## 🔄 Update
+
+To update the program:
+
+```bash
+javanmap update
+```
+
+> Requires git-based installation
+
+---
+
+## ⛔ Uninstall
+
+To remove the program:
+
+```bash
+javanmap uninstall
+```
+
+Or manually:
+
+```bash
+sudo bash /opt/javanmap/uninstall.sh
+```
+
+---
+
+## 🧠 Features
+
+* Host discovery (basic ping check)
+* Top 1000 port scan
+* Single port scan
+* Simple CLI interface
+* Fast TCP socket scanning
+
+---
+
+## 👨‍💻 Author
 
 Created by NerixGO
 
