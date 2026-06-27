@@ -19,20 +19,22 @@ public class PingCheck {
         try {
             InetAddress address = InetAddress.getByName(ip);
 
-            if (address.isReachable(3000)) {
+            boolean reachable = address.isReachable(2000);
+
+            if(reachable) {
                 System.out.println("Javanmap scan report for " + address.getHostName() + " (" + address.getHostAddress() +")");
                 System.out.println("Host is up.");
                 updown++;
                 return true;
             } else {
-                System.out.println("Note: Host seems down. If it is really up, but blocking our ping probes, try -Pn");
+                System.out.println("Note: Host seems down.");
                 return false;
             }
         } catch (UnknownHostException e) {
-            System.out.println("Note: Host seems down. If it is really up, but blocking our ping probes, try -Pn");
+            System.out.println("Error: unknown host.");
             return false;
         } catch (IOException e) {
-            System.out.println("Note: Host seems down. If it is really up, but blocking our ping probes, try -Pn");
+            System.out.println("Note: Host unreachable. It may be blocking ICMP probes.");
             return false;
         }
     }
