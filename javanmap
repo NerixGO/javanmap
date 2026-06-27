@@ -33,6 +33,7 @@ show_help() {
         javanmap uninstall                      Remove the program
 
     OTHER: -h, --help                           Show this help message
+
 EOF
 }
 
