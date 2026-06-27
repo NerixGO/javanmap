@@ -1,17 +1,19 @@
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 public class ScanOptions {
 
     String ip;
     String dataDir;
     int QuantityIps = 0;
     int port = -1;
-        
-    public ScanOptions() {
-    }
 
     public static ScanOptions checkArgs(String[] args) {
+
         ScanOptions opt = new ScanOptions();
 
         for (int i = 0; i < args.length; i++) {
+
             String arg = args[i];
 
              if (arg.startsWith("--data-dir=")) {
@@ -23,14 +25,21 @@ public class ScanOptions {
                 case "-p":
                 case "--port":
                     if (i + 1 < args.length) {
-                        opt.port = Integer.parseInt(args[++i]);
+                        try {
+                            opt.port = Integer.parseInt(args[++i]);
+                        } catch (NumberFormatException e) {
+                            System.out.println("Error: invalid port number: " + args[i]);
+                            System.exit(1);
+                        }
                     }
-                    break;
+                    continue;
 
                 default:
-                    if (arg.matches("^\\d+\\.\\d+\\.\\d+\\.\\d+$")) {
-                        opt.ip = arg;
+                    try {
+                        InetAddress address = InetAddress.getByName(arg);
+                        opt.ip = address.getHostAddress();
                         opt.QuantityIps++;
+                    } catch (UnknownHostException e) {
                     }
             }
         }
