@@ -14,23 +14,26 @@ public class PortCheckTop1000 {
         System.out.println("\nPORT");
         Path portsFile = Paths.get(dataDir, "Top1000Ports.txt");
 
+        List<Integer> ports;
+        
         try {
-            List<Integer> ports = Files.readAllLines(portsFile)
+            ports = Files.readAllLines(portsFile)
                     .stream()
                     .map(String::trim)
                     .filter(s -> !s.isEmpty())
                     .map(Integer::parseInt)
                     .collect(Collectors.toList());
             
-            for (Integer port : ports) {
+        } catch (IOException e) {
+            System.out.println("Error: cannot read Top1000Ports.txt");
+            return;
+        }
+
+        for (int port : ports) {
                 try (Socket socket = new Socket()) {
-                    socket.connect(new InetSocketAddress(ip, port), 200);
+                    socket.connect(new InetSocketAddress(ip, port), 300);
                     System.out.println(port);
                 } catch (IOException e) {}
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 }
