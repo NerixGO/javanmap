@@ -16,17 +16,17 @@ show_help() {
     
     TARGET SPECIFICATION:
         Can pass IPv4 addresses
-        Ex: 192.168.0.1
+        Ex: 192.168.0.2
 
     EXAMPLES:
-        javanmap 192.168.0.1
+        javanmap 192.168.0.2
 
     SCAN OPTIONS:
         -p <port>, --port <port>                Scan a specific port. If omitted, the 1000 most common ports are scanned.
         
     
     FEW EXAMPLES:
-        javanmap -p 22 192.168.0.1
+        javanmap -p 22 192.168.0.2
 
     COMMANDS:
         javanmap update                         Update the program 
