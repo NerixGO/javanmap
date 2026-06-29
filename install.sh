@@ -29,6 +29,9 @@ sudo chmod +x "$INSTALL_DIR/javanmap"
 
 sudo ln -sf "$INSTALL_DIR/javanmap" "$BIN_LINK"
 
+echo
 echo "Installation completed successfully."
 echo "Run the program with:"
+echo
 echo "    javanmap"
+echo
