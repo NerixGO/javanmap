@@ -26,7 +26,7 @@ public class Main {
         
         // Starting main scan
         
-        boolean alive = check.ping(opt.ip);
+        check.ping(opt.ip);
         
         int threads = Runtime.getRuntime().availableProcessors() * 50;
         ExecutorService executor = Executors.newFixedThreadPool(threads);
