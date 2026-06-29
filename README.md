@@ -66,7 +66,7 @@ javanmap -p 80 192.168.0.1
 
 You can also use domain names:
 
-```bas
+```bash
 javanmap youtube.com
 ```
 
