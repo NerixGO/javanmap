@@ -13,7 +13,7 @@ public class Scan {
         try (Socket socket = new Socket()) {
     
             socket.connect(new InetSocketAddress(ip, port), 300);
-            System.out.println(port + "/tcp");
+            System.out.println(port + "/tcp open");
 
         } catch (IOException e) {}
 
