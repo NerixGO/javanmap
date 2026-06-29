@@ -1,6 +1,10 @@
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.InetAddress;
+import java.net.DatagramSocket;
+import java.net.DatagramPacket;
+import java.net.SocketTimeoutException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -30,10 +34,29 @@ public class PortCheckTop1000 {
         }
 
         for (int port : ports) {
-                try (Socket socket = new Socket()) {
-                    socket.connect(new InetSocketAddress(ip, port), 300);
-                    System.out.println(port);
-                } catch (IOException e) {}
+            try (Socket socket = new Socket()) {
+                socket.connect(new InetSocketAddress(ip, port), 100);
+                System.out.println(port + "/tcp");
+            } catch (IOException e) {}
+
+            try (DatagramSocket socket = new DatagramSocket()) {
+
+                socket.setSoTimeout(100);
+
+                byte[] data = "probe".getBytes();
+
+                DatagramPacket packet = new DatagramPacket(data, data.length, InetAddress.getByName(ip), port);
+                socket.send(packet);
+
+                byte[] buffer = new byte[1024];
+
+                DatagramPacket response = new DatagramPacket(buffer, buffer.length);
+
+                socket.receive(response);
+
+                System.out.println(port + "/udp open (responce)");
+            } catch (SocketTimeoutException e) {}
+            catch (IOException e) {}
         }
     }
 }

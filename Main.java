@@ -1,3 +1,7 @@
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
 public class Main {
     public static void main (String[] args) {
 
@@ -9,7 +13,6 @@ public class Main {
         }
 
         PingCheck check = new PingCheck(opt.ip);
-        PortCheckTop1000 ports = new PortCheckTop1000();
         Scan scan = new Scan();
 
         
@@ -25,11 +28,15 @@ public class Main {
             System.exit(1);
         }
         
+        ExecutorService executor = Executors.newFixedThreadPool(100);
         if (opt.port != -1) {
-            scan.checkPort(opt.ip, opt.port);
+            executor.submit(() -> scan.checkPort(opt.ip, opt.port, opt.dataDir));
         } else {
-            ports.top1000(opt.ip, opt.dataDir);
+            PortCheckTop1000 ports = new PortCheckTop1000();
+            executor.submit(() -> ports.top1000(opt.ip, opt.dataDir));
         }
+
+        executor.shutdown();
 
         long endTime = System.currentTimeMillis();
 
