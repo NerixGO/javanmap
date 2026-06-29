@@ -80,7 +80,7 @@ if [[ ! -f "$SCRIPT_DIR/bin/Main.class" ]]; then
   exit 1
 fi
 
-echo "Javanmap $version( https://github.com/NerixGO/javanmap )"
+echo "Javanmap $VERSION ( https://github.com/NerixGO/javanmap )"
 
 exec java -cp "$SCRIPT_DIR/bin" Main --data-dir="$SCRIPT_DIR" "$@"
 
