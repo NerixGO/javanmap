@@ -32,6 +32,7 @@ public class ScanOptions {
             }
 
             switch (arg) {
+
                 case "-p":
                 case "--port":
                     String value = null;
@@ -48,16 +49,24 @@ public class ScanOptions {
                     try {
                         opt.port = Integer.parseInt(value);
                     } catch (NumberFormatException e) {
-                        System.out.println("Error: invalid port number: " + args[i]);
+                        System.out.println("Error: invalid port number: " + value);
                         System.exit(1);
                     }
                     continue;
 
                 default:
+
+                    if (arg.startsWith("-")) {
+                        System.out.println("Error: unknown option: " + arg);
+                        System.exit(1);
+                    }
+
                     try {
-                        InetAddress address = InetAddress.getByName(arg);
+                        String cleaned = arg.replace("http://", "").replace("https://", "");
+                        InetAddress address = InetAddress.getByName(cleaned);
                         opt.ip = address.getHostAddress();
                     } catch (UnknownHostException e) {
+                        System.exit(1);
                     }
             }
         }
