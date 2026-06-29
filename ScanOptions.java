@@ -5,8 +5,8 @@ public class ScanOptions {
 
     String ip;
     String dataDir;
-    int QuantityIps = 0;
     int port = -1;
+    boolean allPorts = false;
 
     public static ScanOptions checkArgs(String[] args) {
 
@@ -54,19 +54,20 @@ public class ScanOptions {
                     }
                     continue;
 
+                case "-p-":
+                case "--all-ports":
+                    opt.allPorts = true;
+                    continue;
+                    
                 default:
-
-                    if (arg.startsWith("-")) {
-                        System.out.println("Error: unknown option: " + arg);
-                        System.exit(1);
-                    }
 
                     try {
                         String cleaned = arg.replace("http://", "").replace("https://", "");
                         InetAddress address = InetAddress.getByName(cleaned);
                         opt.ip = address.getHostAddress();
                     } catch (UnknownHostException e) {
-                        System.exit(1);
+                            System.out.println("Error: invalid host: " + arg);
+                            System.exit(1);
                     }
             }
         }
