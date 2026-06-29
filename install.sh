@@ -21,6 +21,7 @@ sudo mkdir -p "$INSTALL_DIR"
 sudo cp -a "$SCRIPT_DIR/." "$INSTALL_DIR/"
 
 echo "Compiling Java sources..."
+sudo rm -rf "$INSTALL_DIR/bin"
 sudo mkdir -p "$INSTALL_DIR/bin"
 sudo javac -d "$INSTALL_DIR/bin" "$INSTALL_DIR"/*.java
 
