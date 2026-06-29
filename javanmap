@@ -6,9 +6,9 @@ VERSION="v0.5.1"
 SCRIPT_DIR="/opt/javanmap"
 
 show_help() {
-    printf "\n\033[1m   ---BEFORE USAGE MAKE SURE JAVA IS INSTALLED!---\033[0m\n\n"
+  printf "\n\033[1m   ---BEFORE USAGE MAKE SURE JAVA IS INSTALLED!---\033[0m\n\n"
 
-    cat <<EOF
+  cat <<EOF
     Javanmap $VERSION ( https://github.com/NerixGO/javanmap )
     Javanmap is an Nmap-inspired scanner written from scratch in Java.
 
@@ -38,47 +38,49 @@ EOF
 }
 
 case "$1" in
-    -h|--help)
-        show_help
-        exit 0
-        ;;
-        
-    update)
-        echo "Updating..."
+-h | --help)
+  show_help
+  exit 0
+  ;;
 
-        if [[ ! -d "$SCRIPT_DIR/.git" ]]; then
-            echo "Error: installation is not a Git repository."
-            echo "Please reinstall using a Git clone."
-            exit 1
-        fi
+update)
+  echo "Updating..."
 
-        git -C "$SCRIPT_DIR" pull
-        sudo bash "$SCRIPT_DIR/install.sh"
+  if [[ ! -d "$SCRIPT_DIR/.git" ]]; then
+    echo "Error: installation is not a Git repository."
+    echo "Please reinstall using a Git clone."
+    exit 1
+  fi
 
-        echo "Update completed."
-        exit 0
-        ;;
+  git -C "$SCRIPT_DIR" remote set-url origin https://github.com/NerixGO/javanmap.git
+  git -C "$SCRIPT_DIR" pull
+  sudo bash "$SCRIPT_DIR/install.sh"
 
-    uninstall)
-        sudo bash "$SCRIPT_DIR/uninstall.sh"
+  echo "Update completed."
+  exit 0
+  ;;
 
-        if [[ ! -d "$SCRIPT_DIR" ]]; then
-            echo "The program was removed successfully."
-        else
-            echo "Error: uninstall failed."
-            exit 1
-        fi
+uninstall)
+  sudo bash "$SCRIPT_DIR/uninstall.sh"
 
-        exit 0
-        ;;
+  if [[ ! -d "$SCRIPT_DIR" ]]; then
+    echo "The program was removed successfully."
+  else
+    echo "Error: uninstall failed."
+    exit 1
+  fi
+
+  exit 0
+  ;;
 esac
 
 if [[ ! -f "$SCRIPT_DIR/bin/Main.class" ]]; then
-    echo "Error: compiled classes were not found."
-    echo "Please reinstall the program."
-    exit 1
+  echo "Error: compiled classes were not found."
+  echo "Please reinstall the program."
+  exit 1
 fi
 
 echo "Javanmap $version( https://github.com/NerixGO/javanmap )"
 
 exec java -cp "$SCRIPT_DIR/bin" Main --data-dir="$SCRIPT_DIR" "$@"
+
