@@ -27,6 +27,7 @@ public class Main {
         // Starting main scan
         
         check.ping(opt.ip);
+        int updown = check.getUpdown();
         
         int threads = Runtime.getRuntime().availableProcessors() * 50;
         ExecutorService executor = Executors.newFixedThreadPool(threads);
@@ -76,9 +77,11 @@ public class Main {
 
         if (openPorts > 0) {
             scan.printOpenPorts();
+            if (updown == 0) {
+                updown++;
+            }
         }
         
-        int updown = check.getUpdown();
         
         System.out.print("\nJavanmap done: " + updown + " IP address (" + updown + " hosts up) scanned in " + (double) (endTime - startTime) / 1000.0 + " seconds.\n");
     }
