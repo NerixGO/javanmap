@@ -1,3 +1,9 @@
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -24,23 +30,50 @@ public class Main {
         if (!alive) {
             long endTime = System.currentTimeMillis();
             int updown = check.getUpdown();
-            System.out.print("\nJavanmap done: " + opt.QuantityIps + " IP address (" + updown + " hosts up) scanned in " + (double)(endTime - startTime)/1000.0 + " seconds.\n");
-            System.exit(1);
+            System.out.print("\nJavanmap done: " + updown + " IP address (" + updown + " hosts up) scanned in " + (double)(endTime - startTime)/1000.0 + " seconds.\n");
+            return;
         }
         
+        System.out.println("\nPORT");
+
         ExecutorService executor = Executors.newFixedThreadPool(100);
-        if (opt.port != -1) {
-            executor.submit(() -> scan.checkPort(opt.ip, opt.port, opt.dataDir));
+
+        if (opt.port == -1) {
+
+            Path portsFile = Paths.get(opt.dataDir, "Top1000Ports.txt");
+        
+        try {
+            List<Integer> ports = Files.readAllLines(portsFile)
+                    .stream()
+                    .map(String::trim)
+                    .filter(s -> !s.isEmpty())
+                    .map(Integer::parseInt)
+                    .collect(Collectors.toList());
+
+            for (int port : ports) {
+                int currentPort = port;
+                executor.submit(() -> scan.check(opt.ip, currentPort));
+            }
+            
+        } catch (IOException e) {
+            System.out.println("Error: cannot read Top1000Ports.txt");
+        } 
         } else {
-            PortCheckTop1000 ports = new PortCheckTop1000();
-            executor.submit(() -> ports.top1000(opt.ip, opt.dataDir));
+            executor.submit(() -> scan.check(opt.ip, opt.port));
         }
 
         executor.shutdown();
 
+        try {
+            executor.awaitTermination(Long.MAX_VALUE, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
         long endTime = System.currentTimeMillis();
 
         int updown = check.getUpdown();
-        System.out.print("\nJavanmap done: " + opt.QuantityIps + " IP address (" + updown + " hosts up) scanned in " + (double)(endTime - startTime)/1000.0 + " seconds.\n");
+
+        System.out.print("\nJavanmap done: " + updown + " IP address (" + updown + " hosts up) scanned in " + (double) (endTime - startTime) / 1000.0 + " seconds.\n");
     }
 }
