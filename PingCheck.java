@@ -1,8 +1,5 @@
 import java.io.IOException;
 import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.net.Socket;
-import java.net.UnknownHostException;
 
 public class PingCheck {
 
@@ -17,20 +14,16 @@ public class PingCheck {
         try {
             InetAddress address = InetAddress.getByName(ip);
 
-            try (Socket socket = new Socket()) {
-                socket.connect(new InetSocketAddress(address, 443), 2000);
-
+            if (address.isReachable(2000)) {
                 System.out.println("Javanmap scan report for " + address.getHostName() + " (" + address.getHostAddress() +")");
                 System.out.println("Host is up: ");
                 updown++;
                 return true;
-
-            } catch (IOException e) {
-                System.out.println("Note: Host seems down");
+            } else {
                 return false;
             }
 
-        } catch (UnknownHostException e) {
+        } catch (IOException e) {
             System.out.println("Note: Host seems down");
             return false;
         }
