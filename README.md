@@ -7,9 +7,10 @@ It provides basic host discovery and port scanning functionality through a simpl
 
 ## ⚠️ Disclaimer
 
-This tool is intended for educational purposes only.
+This tool is intended for educational and authorized security testing only.
 Do not use it on networks or systems you do not own or have explicit permission to scan.
-The author is not responsible for any misuse.
+
+The author is not responsible for any misuse or damage caused by this tool.
 
 ---
 
@@ -17,14 +18,16 @@ The author is not responsible for any misuse.
 
 - Java 8 or higher (JDK required, not just JRE)
 - Bash (for installation and CLI launcher)
-- Git (for update functionality)
+- Git (only required for update functionality)
 
-Check Java version:
+Check Java installation:
 
 ```bash
+
 java -version
 javac -version
-````
+
+```
 
 ---
 
@@ -33,17 +36,23 @@ javac -version
 Clone the repository:
 
 ```bash
+
 git clone --depth 1 https://github.com/NerixGO/javanmap.git
+
+chmod +x javanmap/install.sh
 
 sudo bash javanmap/install.sh
 
 rm -rf javanmap
+
 ```
 
 After installation, you can run:
 
 ```bash
+
 javanmap
+
 ```
 
 ---
@@ -53,19 +62,37 @@ javanmap
 Basic scan:
 
 ```bash
-javanmap 192.168.0.1
-```
 
+javanmap 192.168.0.1
+
+```
 Scan specific port:
 
 ```bash
+
 javanmap -p 80 192.168.0.1
+
 ```
+
+You can also use domain names:
+
+```bash
+
+javanmap youtube.com
+
+```
+
+NOTE:
+Some domains may not respond to ICMP ping due to firewall or provider restrictions.
+
+---
 
 Show help:
 
 ```bash
+
 javanmap --help
+
 ```
 
 ---
@@ -75,10 +102,13 @@ javanmap --help
 To update the program:
 
 ```bash
+
 javanmap update
+
 ```
 
-> Requires git-based installation
+NOTE:
+Requires git-based installation (repository cloned via git).
 
 ---
 
@@ -87,24 +117,38 @@ javanmap update
 To remove the program:
 
 ```bash
+
 javanmap uninstall
+
 ```
 
 Or manually:
 
 ```bash
+
 sudo bash /opt/javanmap/uninstall.sh
+
 ```
 
 ---
 
 ## 🧠 Features
 
-* Host discovery (basic ping check)
-* Top 1000 port scan
-* Single port scan
+* Host discovery (ICMP reachability check via Java)
+* TCP port scanning (connect-based)
+* UDP probe scanning (basic response detection)
+* Top 1000 most common ports scan
+* Single port scan mode
 * Simple CLI interface
-* Fast TCP socket scanning
+* Multithreaded scanning for performance
+
+---
+
+## LIMITATIONS
+
+* ICMP ping may not work on all systems (OS and firewall dependent)
+* UDP scanning is not fully reliable (depends on service behavior)
+* Some operations may require elevated permissions on Linux/macOS
 
 ---
 
