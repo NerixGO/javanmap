@@ -18,7 +18,7 @@ public class Main {
             return;
         }
 
-        PingCheck check = new PingCheck(opt.ip);
+        PingCheck check = new PingCheck();
         Scan scan = new Scan();
 
         
@@ -26,17 +26,12 @@ public class Main {
         
         // Starting main scan
         
-        boolean alive = check.ping(opt.ip);
-        if (!alive) {
-            long endTime = System.currentTimeMillis();
-            int updown = check.getUpdown();
-            System.out.print("\nJavanmap done: " + updown + " IP address (" + updown + " hosts up) scanned in " + (double)(endTime - startTime)/1000.0 + " seconds.\n");
-            return;
-        }
+        check.ping(opt.ip);
         
         System.out.println("\nPORT");
 
-        ExecutorService executor = Executors.newFixedThreadPool(100);
+        int threads = Runtime.getRuntime().availableProcessors() * 50;
+        ExecutorService executor = Executors.newFixedThreadPool(threads);
 
         if (opt.port == -1) {
 
