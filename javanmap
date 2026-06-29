@@ -24,7 +24,7 @@ show_help() {
 
     SCAN OPTIONS:
         -p <port>, --port <port>                Scan a specific port. If omitted, the 1000 most common ports are scanned.
-        
+        -p-, --all-ports                        Scan all ports (65k)
     
     FEW EXAMPLES:
         javanmap -p 22 192.168.0.2
