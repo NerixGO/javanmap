@@ -17,16 +17,20 @@ public class PingCheck {
         try {
             InetAddress address = InetAddress.getByName(ip);
 
-            if (address.isReachable(2000)) {
+            try (Socket socket = new Socket()) {
+                socket.connect(new InetSocketAddress(address, 443), 2000);
+
                 System.out.println("Javanmap scan report for " + address.getHostName() + " (" + address.getHostAddress() +")");
                 System.out.println("Host is up: ");
                 updown++;
                 return true;
-            } else {
+
+            } catch (IOException e) {
+                System.out.println("Note: Host seems down");
                 return false;
             }
 
-        } catch (IOException e) {
+        } catch (UnknownHostException e) {
             System.out.println("Note: Host seems down");
             return false;
         }
