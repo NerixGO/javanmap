@@ -5,27 +5,16 @@ import java.net.InetAddress;
 import java.net.DatagramSocket;
 import java.net.DatagramPacket;
 import java.net.SocketTimeoutException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class Scan {
 
-    public void checkPort(String ip, int port, String dataDir) {
-        
-        if (port == -1) {
-            PortCheckTop1000 ports = new PortCheckTop1000();
-            ports.top1000(ip, dataDir);
-        }
-
-        System.out.println("\nPORT");
+    public void check(String ip, int port) {
 
         try (Socket socket = new Socket()) {
     
             socket.connect(new InetSocketAddress(ip, port), 300);
             System.out.println(port + "/tcp");
+
         } catch (IOException e) {}
 
         try (DatagramSocket socket = new DatagramSocket()) {
@@ -44,6 +33,7 @@ public class Scan {
             socket.receive(response);
 
             System.out.println(port + "/udp open");
+
         } catch (SocketTimeoutException e) {}
         catch (IOException e) {}
     }
