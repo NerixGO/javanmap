@@ -23,10 +23,8 @@ The author is not responsible for any misuse or damage caused by this tool.
 Check Java installation:
 
 ```bash
-
 java -version
 javac -version
-
 ```
 
 ---
@@ -36,7 +34,6 @@ javac -version
 Clone the repository:
 
 ```bash
-
 git clone --depth 1 https://github.com/NerixGO/javanmap.git
 
 chmod +x javanmap/install.sh
@@ -44,15 +41,12 @@ chmod +x javanmap/install.sh
 sudo bash javanmap/install.sh
 
 rm -rf javanmap
-
 ```
 
 After installation, you can run:
 
 ```bash
-
 javanmap
-
 ```
 
 ---
@@ -62,24 +56,18 @@ javanmap
 Basic scan:
 
 ```bash
-
 javanmap 192.168.0.1
-
 ```
 Scan specific port:
 
 ```bash
-
 javanmap -p 80 192.168.0.1
-
 ```
 
 You can also use domain names:
 
-```bash
-
+```bas
 javanmap youtube.com
-
 ```
 
 NOTE:
@@ -90,9 +78,7 @@ Some domains may not respond to ICMP ping due to firewall or provider restrictio
 Show help:
 
 ```bash
-
 javanmap --help
-
 ```
 
 ---
@@ -102,9 +88,7 @@ javanmap --help
 To update the program:
 
 ```bash
-
 javanmap update
-
 ```
 
 NOTE:
@@ -117,17 +101,13 @@ Requires git-based installation (repository cloned via git).
 To remove the program:
 
 ```bash
-
 javanmap uninstall
-
 ```
 
 Or manually:
 
 ```bash
-
 sudo bash /opt/javanmap/uninstall.sh
-
 ```
 
 ---
