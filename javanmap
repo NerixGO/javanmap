@@ -15,11 +15,12 @@ show_help() {
     Usage: javanmap [option] <target>
     
     TARGET SPECIFICATION:
-        Can pass IPv4 addresses
-        Ex: 192.168.0.2
+        Can pass IPv4 addresses, Domain names,
+        Ex: 192.168.0.2, google.com
 
     EXAMPLES:
         javanmap 192.168.0.2
+        javanmap youtube.com
 
     SCAN OPTIONS:
         -p <port>, --port <port>                Scan a specific port. If omitted, the 1000 most common ports are scanned.
