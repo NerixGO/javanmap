@@ -16,21 +16,40 @@ public class ScanOptions {
 
             String arg = args[i];
 
-             if (arg.startsWith("--data-dir=")) {
+            if (arg.startsWith("--data-dir=")) {
                 opt.dataDir = arg.substring("--data-dir=".length());
                 continue;
             }
             
+            if (arg.matches("^-p\\d+$|^--port\\d+$")) {
+                String value = arg.replaceAll("\\D+", "");
+                try {
+                    opt.port = Integer.parseInt(value);
+                } catch (NumberFormatException e) {
+                    System.out.println("Error: invalid port number: " + value);
+                    System.exit(1);
+                }
+            }
+
             switch (arg) {
                 case "-p":
                 case "--port":
+                    String value = null;
+                    
                     if (i + 1 < args.length) {
-                        try {
-                            opt.port = Integer.parseInt(args[++i]);
-                        } catch (NumberFormatException e) {
-                            System.out.println("Error: invalid port number: " + args[i]);
-                            System.exit(1);
-                        }
+                        value = args[++i];
+                    }
+                    
+                    if (value == null) {
+                        System.out.println("Error: port not specified");
+                        System.exit(1);
+                    }
+
+                    try {
+                        opt.port = Integer.parseInt(value);
+                    } catch (NumberFormatException e) {
+                        System.out.println("Error: invalid port number: " + args[i]);
+                        System.exit(1);
                     }
                     continue;
 
