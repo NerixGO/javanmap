@@ -57,7 +57,6 @@ public class ScanOptions {
                     try {
                         InetAddress address = InetAddress.getByName(arg);
                         opt.ip = address.getHostAddress();
-                        opt.QuantityIps++;
                     } catch (UnknownHostException e) {
                     }
             }
