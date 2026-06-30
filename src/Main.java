@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 public class Main {
-    public static void main (String[] args) {
+    public static void main(String[] args) {
 
         ScanOptions opt = ScanOptions.checkArgs(args);
         
@@ -21,30 +21,30 @@ public class Main {
         PingCheck check = new PingCheck();
         Scan scan = new Scan();
 
-        
         long startTime = System.currentTimeMillis();
         
         // Starting main scan
+
+        boolean isUp = check.ping(opt.ip);
         
-        check.ping(opt.ip);
-        int updown = check.getUpdown();
-        
-        int threads = Runtime.getRuntime().availableProcessors() * 40;
+        int threads = 200;
         ExecutorService executor = Executors.newFixedThreadPool(threads);
-        
         
         if (opt.port == -1) {
 
-            Path portsFile = Paths.get(opt.dataDir, "resources/Top1000Ports.txt");
+            Path portsFile = Paths.get(
+                    opt.dataDir != null ? opt.dataDir : ".",
+                    "resources/Top1000Ports.txt"
+            );
 
             try {
                 List<Integer> ports = Files.readAllLines(portsFile)
-                .stream()
-                .map(String::trim)
-                .filter(s -> !s.isEmpty())
-                .map(Integer::parseInt)
-                .collect(Collectors.toList());
-                
+                        .stream()
+                        .map(String::trim)
+                        .filter(s -> !s.isEmpty())
+                        .map(Integer::parseInt)
+                        .collect(Collectors.toList());
+
                 for (int port : ports) {
                     executor.submit(() -> scan.check(opt.ip, port));
                 }
@@ -53,11 +53,13 @@ public class Main {
                 System.out.println("Error: cannot read Top1000Ports.txt");
                 return;
             }
+
         } else if (opt.allPorts) {
-            for (int i = 0; i < 65536; i++) {
+            for (int i = 1; i < 65536; i++) {
                 int port = i;
                 executor.submit(() -> scan.check(opt.ip, port));
             }
+
         } else {
             executor.submit(() -> scan.check(opt.ip, opt.port));
         }
@@ -65,7 +67,7 @@ public class Main {
         executor.shutdown();
         
         try {
-            executor.awaitTermination(Long.MAX_VALUE, TimeUnit.SECONDS);
+            executor.awaitTermination(60, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
@@ -76,12 +78,8 @@ public class Main {
 
         if (openPorts > 0) {
             scan.printOpenPorts();
-            if (updown == 0) {
-                updown++;
-            }
         }
         
-        
-        System.out.print("\nJavanmap done: " + updown + " IP address (" + updown + " hosts up) scanned in " + (double) (endTime - startTime) / 1000.0 + " seconds.\n");
+        System.out.print("\nJavanmap done: host " + (isUp ? "up" : "down") + ", open ports: " + openPorts + ", time: " + (double) (endTime - startTime) / 1000.0 + " seconds\n");
     }
 }

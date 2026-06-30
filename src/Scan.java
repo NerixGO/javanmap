@@ -8,23 +8,30 @@ import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Scan {
 
     private final ConcurrentLinkedQueue<PortResult> results = new ConcurrentLinkedQueue<>();
+    private final ConcurrentHashMap<Integer, Boolean> seen = new ConcurrentHashMap<>();
 
     public record PortResult(int port, String protocol) {}
 
     public void check(String ip, int port) {
 
+        // TCP
         try (Socket socket = new Socket()) {
-    
+            
             socket.connect(new InetSocketAddress(ip, port), 300);
-            results.add(new PortResult(port, "tcp"));
+            
+            if (seen.putIfAbsent(port * 10 + 1, true) == null) {
+                results.add(new PortResult(port, "tcp"));
+            }
 
-        } catch (IOException e) {}
+        } catch (IOException ignored) {}
 
+        // UDP
         try (DatagramSocket socket = new DatagramSocket()) {
 
             socket.setSoTimeout(300);
@@ -32,11 +39,12 @@ public class Scan {
             byte[] data = "probe".getBytes();
 
             DatagramPacket packet = new DatagramPacket(
-                data,
-                data.length,
-                InetAddress.getByName(ip),
-                port);
-            
+                    data,
+                    data.length,
+                    InetAddress.getByName(ip),
+                    port
+            );
+
             socket.send(packet);
 
             byte[] buffer = new byte[1024];
@@ -45,10 +53,12 @@ public class Scan {
 
             socket.receive(response);
 
-            results.add(new PortResult(port, "udp"));
+            if (seen.putIfAbsent(port * 10 + 2, true) == null) {
+                results.add(new PortResult(port, "udp"));
+            }
 
-        } catch (SocketTimeoutException e) {}
-        catch (IOException e) {}
+        } catch (SocketTimeoutException ignored) {
+        } catch (IOException ignored) {}
     }
 
     public List<PortResult> getSortedResults() {

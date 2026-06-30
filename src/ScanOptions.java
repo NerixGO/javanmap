@@ -48,6 +48,8 @@ public class ScanOptions {
 
                 default:
 
+                    if (opt.ip != null) continue;
+
                     try {
                         String cleaned = arg
                                 .replace("http://", "")
