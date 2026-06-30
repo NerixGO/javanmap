@@ -2,7 +2,7 @@
 
 set -e
 
-VERSION="v0.7.2"
+VERSION="v0.7.3"
 SCRIPT_DIR="/opt/javanmap"
 
 show_help() {
