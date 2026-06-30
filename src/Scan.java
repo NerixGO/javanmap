@@ -16,7 +16,16 @@ public class Scan {
     private final ConcurrentLinkedQueue<PortResult> results = new ConcurrentLinkedQueue<>();
     private final ConcurrentHashMap<Integer, Boolean> seen = new ConcurrentHashMap<>();
 
-    public record PortResult(int port, String protocol) {}
+    public static class PortResult{
+
+        public final int port;
+        public final String protocol;
+
+        public PortResult(int port, String protocol) {
+            this.port = port;
+            this.protocol = protocol;
+        }
+    }
 
     public void check(String ip, int port) {
 
@@ -64,11 +73,11 @@ public class Scan {
     public List<PortResult> getSortedResults() {
         List<PortResult> list = new ArrayList<>(results);
 
-        Collections.sort(list, (a, b) -> {
-            if (a.port() == b.port()) {
-                return a.protocol().compareTo(b.protocol());
+        Collections.sort(list, (PortResult a, PortResult b) -> {
+            if (a.port == b.port) {
+                return a.protocol.compareTo(b.protocol);
             }
-            return Integer.compare(a.port(), b.port());
+            return Integer.compare(a.port, b.port);
         });
         return list;
     }
@@ -81,7 +90,7 @@ public class Scan {
         System.out.println("\nPORT");
         
         for (PortResult r : sorted) {
-            System.out.println(r.port() + "/" + r.protocol());
+            System.out.println(r.port + "/" + r.protocol);
         }
     }
 
