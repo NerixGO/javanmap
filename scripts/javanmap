@@ -1,0 +1,99 @@
+#!/usr/bin/env bash
+
+set -e
+
+VERSION="v0.7.2"
+SCRIPT_DIR="/opt/javanmap"
+
+show_help() {
+    printf "\n\033[1m   ---BEFORE USAGE MAKE SURE JAVA IS INSTALLED!---\033[0m\n\n"
+
+    cat <<EOF
+    Javanmap $VERSION ( https://github.com/NerixGO/javanmap )
+    Javanmap is an Nmap-inspired scanner written from scratch in Java.
+
+    Usage: javanmap [option] <target>
+    
+    TARGET SPECIFICATION:
+        Can pass IPv4 addresses, Domain names,
+        Ex: 192.168.0.2, google.com
+
+    EXAMPLES:
+        javanmap 192.168.0.2
+        javanmap youtube.com
+
+    SCAN OPTIONS:
+        -p <port>, --port <port>                Scan a specific port. If omitted, the 1000 most common ports are scanned.
+        -p-, --all-ports                        Scan all ports (65k)
+    
+    FEW EXAMPLES:
+        javanmap -p 22 192.168.0.2
+
+    COMMANDS:
+        javanmap update                         Update the program 
+        javanmap uninstall                      Remove the program
+
+    OTHER: -h, --help                           Show this help message
+
+EOF
+}
+
+case "$1" in
+-h | --help)
+    show_help
+    exit 0
+    ;;
+
+update)
+
+    if ! command -v git >/dev/null 2>&1; then
+        echo "Error: git is not installed."
+        exit 1
+    fi
+
+    echo "Updating..."
+
+    if [[ ! -d "$SCRIPT_DIR/.git" ]]; then
+        echo "Error: installation is not a Git repository."
+        echo "Please reinstall using a Git clone."
+        exit 1
+    fi
+
+    git -C "$SCRIPT_DIR" remote set-url origin https://github.com/NerixGO/javanmap.git
+    git -C "$SCRIPT_DIR" pull --ff-only
+    sudo bash "$SCRIPT_DIR/scripts/install.sh"
+  
+    echo "Update completed."
+    exit 0
+    ;;
+
+uninstall)
+    sudo bash "$SCRIPT_DIR/scripts/uninstall.sh"
+
+    if [[ ! -d "$SCRIPT_DIR" ]]; then
+        echo "The program was removed successfully."
+    else
+        echo "Error: uninstall failed."
+        exit 1
+    fi
+
+    exit 0
+    ;;
+esac
+
+if [[ ! -f "$SCRIPT_DIR/bin/Main.class" ]]; then
+    echo "Error: compiled classes were not found."
+    echo "Please reinstall the program."
+    exit 1
+fi
+
+if ! command -v java >/dev/null 2>&1; then
+    echo "Error: Java runtime not found."
+    echo "Please install Java (JRE/JDK 8 or newer)."
+    exit 1
+fi
+
+echo "Javanmap $VERSION ( https://github.com/NerixGO/javanmap )"
+
+exec java -cp "$SCRIPT_DIR/bin" Main --data-dir="$SCRIPT_DIR" "$@"
+
