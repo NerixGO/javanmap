@@ -52,7 +52,7 @@ public class Main {
             } catch (IOException e) {
                 System.out.println("Error: cannot read Top1000Ports.txt");
                 return;
-            } 
+            }
         } else if (opt.allPorts) {
             Executors.newFixedThreadPool(200);
             for (int i = 0; i < 65536; i++) {
