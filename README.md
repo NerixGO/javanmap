@@ -36,9 +36,9 @@ Clone the repository:
 ```bash
 git clone --depth 1 https://github.com/NerixGO/javanmap.git
 
-chmod +x javanmap/install.sh
+chmod +x javanmap/scripts/install.sh
 
-sudo bash javanmap/install.sh
+sudo bash javanmap/scripts/install.sh
 
 rm -rf javanmap
 ```
@@ -107,7 +107,7 @@ javanmap uninstall
 Or manually:
 
 ```bash
-sudo bash /opt/javanmap/uninstall.sh
+sudo bash /opt/javanmap/scripts/uninstall.sh
 ```
 
 ---
